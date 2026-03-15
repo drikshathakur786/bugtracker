@@ -4,7 +4,7 @@ import axios from 'axios';
 // So instead of writing http://localhost:8080/api/auth/login every time,
 // you just write /auth/login
 const instance = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api',
 });
 
 // REQUEST INTERCEPTOR
