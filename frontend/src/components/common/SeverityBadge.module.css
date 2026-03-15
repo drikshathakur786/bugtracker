@@ -1,0 +1,13 @@
+.badge {
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.critical { background: #fff0f0; color: #c53030; }
+.high     { background: #fff5f0; color: #c05621; }
+.medium   { background: #fffbf0; color: #b7791f; }
+.low      { background: #f0fff4; color: #276749; }

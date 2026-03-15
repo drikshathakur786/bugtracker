@@ -1,0 +1,63 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: start;
+  padding: 1rem 0;
+}
+
+.column {
+  background: #f7f8fc;
+  border-radius: 12px;
+  padding: 0.75rem;
+  min-height: 200px;
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0 0.25rem;
+}
+
+.colorDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.columnTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.count {
+  background: #e2e8f0;
+  color: #666;
+  padding: 0.1rem 0.45rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.cardList {
+  min-height: 80px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  padding: 0.25rem;
+}
+
+.draggingOver {
+  background: #e0e7ff;
+}
+
+.empty {
+  text-align: center;
+  color: #ccc;
+  font-size: 0.8rem;
+  padding: 1.5rem 0;
+}
