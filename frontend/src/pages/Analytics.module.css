@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.statCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1.5px solid #e2e8f0;
+}
+
+.statNumber {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: #888;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+.open .statNumber    { color: #e53e3e; }
+.progress .statNumber { color: #d69e2e; }
+.closed .statNumber  { color: #38a169; }
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.chartCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1.5px solid #e2e8f0;
+}
+
+.chartTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.empty {
+  text-align: center;
+  color: #aaa;
+  padding: 3rem 0;
+  font-size: 0.875rem;
+}

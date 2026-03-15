@@ -1,28 +1,26 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useBugs from '../hooks/useBugs';
-import KanbanBoard from "../components/common/KanbanBoard";
+import KanbanBoard from '../components/common/KanbanBoard';
 import CreateBugModal from '../components/common/CreateBugModal';
+import Analytics from './Analytics';
 import { useAuth } from '../context/AuthContext';
 import styles from './ProjectDetail.module.css';
 
 function ProjectDetail() {
-  const { id } = useParams(); // gets project ID from URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { bugs, bugsByStatus, loading, error, addBug, editBug } = useBugs(id);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [activeTab, setActiveTab] = useState('kanban');
 
-  // This fires when a card is dropped in a new column
   const handleDragEnd = async (result) => {
     const { destination, source, draggableId } = result;
 
-    // Dropped outside a column or same column — do nothing
     if (!destination) return;
     if (destination.droppableId === source.droppableId) return;
 
-    // Update bug status to match the column it was dropped into
     try {
       await editBug(draggableId, { status: destination.droppableId });
     } catch (err) {
@@ -67,6 +65,12 @@ function ProjectDetail() {
           onClick={() => setActiveTab('list')}
         >
           List View
+        </button>
+        <button
+          className={`${styles.tab} ${activeTab === 'analytics' ? styles.activeTab : ''}`}
+          onClick={() => setActiveTab('analytics')}
+        >
+          Analytics
         </button>
       </div>
 
@@ -117,6 +121,10 @@ function ProjectDetail() {
               </table>
             )}
           </div>
+        )}
+
+        {!loading && activeTab === 'analytics' && (
+          <Analytics projectId={id} />
         )}
       </main>
 
