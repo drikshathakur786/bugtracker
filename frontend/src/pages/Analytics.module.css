@@ -11,29 +11,50 @@
 }
 
 .statCard {
-  background: white;
-  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
   text-align: center;
-  border: 1.5px solid #e2e8f0;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 
+.statCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.statCard:hover { border-color: var(--border-bright); }
+.statCard:hover::before { opacity: 1; }
+
 .statNumber {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a1a2e;
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
 }
 
 .statLabel {
-  font-size: 0.875rem;
-  color: #888;
-  margin-top: 0.25rem;
+  font-size: 0.775rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--font-display);
 }
 
-.open .statNumber    { color: #e53e3e; }
-.progress .statNumber { color: #d69e2e; }
-.closed .statNumber  { color: #38a169; }
+.open .statNumber    { color: var(--red); }
+.progress .statNumber { color: var(--yellow); }
+.closed .statNumber  { color: var(--green); }
 
 .chartsGrid {
   display: grid;
@@ -42,22 +63,28 @@
 }
 
 .chartCard {
-  background: white;
-  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
-  border: 1.5px solid #e2e8f0;
+  transition: border-color 0.2s;
 }
 
+.chartCard:hover { border-color: var(--border-bright); }
+
 .chartTitle {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 1rem 0;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 1.25rem 0;
 }
 
 .empty {
   text-align: center;
-  color: #aaa;
+  color: var(--text-muted);
   padding: 3rem 0;
   font-size: 0.875rem;
 }
