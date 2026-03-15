@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ProjectDetail from './pages/ProjectDetail';
+import BugDetail from './pages/BugDetail';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           } />
           <Route path="/projects/:id" element={
             <ProtectedRoute><ProjectDetail /></ProtectedRoute>
+          } />
+          <Route path="/bugs/:id" element={
+            <ProtectedRoute><BugDetail /></ProtectedRoute>
           } />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Routes>
