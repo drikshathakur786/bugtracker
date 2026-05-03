@@ -1,44 +1,37 @@
 # Bug Tracker
 
-A full-stack bug and task management platform designed for software teams. Built from scratch with **Spring Boot** and **React**, it provides a complete workflow for tracking bugs — from creation and assignment to resolution — with role-based access, a drag-and-drop Kanban board, and real-time analytics.
+A full-stack bug and task management platform built for software teams who want clarity, not clutter. From filing a bug to closing it — every step is tracked, visualized, and accessible based on your role.
 
-**[Live Demo →](https://drikshathakur-bugtracker.vercel.app)**
+Built from the ground up with **Spring Boot** and **React**. No templates, no boilerplate generators.
 
-> **Note:** The backend is hosted on a free tier and may take ~30 seconds to wake up on the first request. Subsequent requests are fast.
+🔗 https://drikshathakur-bugtracker.vercel.app
 
----
-
-## Why This Exists
-
-Most bug trackers are either bloated enterprise tools or oversimplified todo lists. This project sits in the middle — a clean, focused tool that covers the real needs of a small dev team: authentication, role management, bug lifecycle tracking, and visual analytics — all without the overhead.
+> The backend runs on a free-tier server and may take ~30s to wake up on the first request. After that, it's snappy.
 
 ---
 
-## Features
+## The Problem
 
-**Authentication & Access Control**
-- JWT-based authentication with secure token management
-- Role-based authorization — Admin, Developer, and Tester each see and do different things
-- Protected routes on both frontend and backend
+Bug tracking shouldn't require a 200-page manual. Most tools are either overengineered enterprise suites or glorified sticky notes. This project is the sweet spot — powerful enough for a real team, simple enough to use on day one.
 
-**Project & Bug Management**
-- Create projects and invite team members
-- Full bug lifecycle — create, assign, update status, resolve, close
-- Inline editing on bug detail pages
-- Comment threads on every bug for team discussion
+---
 
-**Kanban Board**
-- Drag-and-drop interface with four status columns: Open, In Progress, In Review, Closed
-- Visual at-a-glance view of where every bug stands
+## What It Does
 
-**Analytics Dashboard**
-- Severity distribution (pie chart)
-- Status breakdown (bar chart)
-- Per-assignee workload analysis
+**Authentication & Roles**  
+Every user signs up with a role — Admin, Developer, or Tester. Each role has different permissions. Admins manage projects and people. Developers handle assignments. Testers report and verify. JWT handles all session management with no cookies and no server-side state.
 
-**Audit Trail**
-- Every status change is automatically logged with timestamps
-- Full history of who changed what, and when
+**Projects & Bugs**  
+Create a project, invite members, and start logging bugs. Each bug carries a severity level, an assignee, a status, and a full comment thread. Inline editing means you fix details without navigating away.
+
+**Kanban Board** 🗂️  
+Four columns — Open, In Progress, In Review, Closed. Drag a bug card from one column to another and the status updates instantly. It's the fastest way to see where everything stands at a glance.
+
+**Analytics Dashboard** 📊  
+Pie charts for severity distribution. Bar charts for status breakdown. Per-assignee workload metrics. All powered by live data from the database — not mock numbers.
+
+**Audit Trail**  
+Every status change is logged automatically — who changed it, what it was before, and when. No manual effort required.
 
 ---
 
@@ -48,13 +41,13 @@ Most bug trackers are either bloated enterprise tools or oversimplified todo lis
 |--------------|-------------------------------------------------------------|
 | **Backend**  | Java 17, Spring Boot 3, Spring Security, Hibernate (JPA)   |
 | **Frontend** | React 18, Vite, Recharts, @hello-pangea/dnd                |
-| **Database** | PostgreSQL (hosted on Neon)                                 |
-| **Auth**     | JWT (jjwt library), BCrypt password hashing                 |
-| **Deploy**   | Vercel (frontend), Render (backend), Neon (database)        |
+| **Database** | PostgreSQL (Neon)                                           |
+| **Auth**     | JWT with BCrypt password hashing                            |
+| **Hosting**  | Vercel (frontend) · Render (backend) · Neon (database)     |
 
 ---
 
-## Architecture
+## How It's Built
 
 ```
 ┌──────────────┐       HTTPS        ┌──────────────────┐       JDBC       ┌────────────┐
@@ -63,56 +56,56 @@ Most bug trackers are either bloated enterprise tools or oversimplified todo lis
 └──────────────┘                     └──────────────────┘                  └────────────┘
 ```
 
+The frontend is a single-page React app that communicates with a stateless REST API. Authentication is handled entirely through JWT tokens passed in the `Authorization` header. The backend validates every request through a custom security filter chain before it reaches any controller.
+
 **Backend structure:**
 ```
-backend/src/main/java/com/drikshathakur/bugtracker/
-├── config/          # Security, CORS configuration
-├── controller/      # REST endpoints (Auth, Bug, Project, Analytics)
-├── dto/             # Request/response data transfer objects
-├── entity/          # JPA entities (User, Bug, Project, Comment, AuditLog)
-├── exception/       # Custom exception handling
+com.drikshathakur.bugtracker/
+├── config/          # Security, CORS
+├── controller/      # REST endpoints — Auth, Bug, Project, Analytics
+├── dto/             # Request/response objects
+├── entity/          # JPA entities — User, Bug, Project, Comment, AuditLog
+├── exception/       # Global exception handling
 ├── repository/      # Spring Data JPA repositories
-├── security/        # JWT filter, token utilities
-└── service/         # Business logic layer
+├── security/        # JWT filter, token generation & validation
+└── service/         # Core business logic
 ```
 
 ---
 
-## Running Locally
+## API Overview
+
+| Method   | Endpoint                          | Description               | Auth     |
+|----------|-----------------------------------|---------------------------|----------|
+| `POST`   | `/api/auth/register`              | Create a new account      | Public   |
+| `POST`   | `/api/auth/login`                 | Login, receive JWT        | Public   |
+| `GET`    | `/api/auth/me`                    | Current user profile      | Required |
+| `GET`    | `/api/projects`                   | List your projects        | Required |
+| `POST`   | `/api/projects`                   | Create a project          | Required |
+| `GET`    | `/api/projects/{id}/bugs`         | Bugs in a project         | Required |
+| `POST`   | `/api/projects/{id}/bugs`         | File a new bug            | Required |
+| `PATCH`  | `/api/bugs/{id}`                  | Update bug details        | Required |
+| `PATCH`  | `/api/bugs/{id}/status`           | Change bug status         | Required |
+| `GET`    | `/api/analytics/project/{id}`     | Project analytics         | Required |
+
+---
+
+## Run Locally
 
 **Prerequisites:** Java 17+, Maven, Node.js 18+, PostgreSQL
 
-**Backend**
 ```bash
+# Backend
 cd backend
 mvn spring-boot:run
-```
 
-**Frontend**
-```bash
+# Frontend (in a separate terminal)
 cd frontend
 npm install
 npm run dev
 ```
 
-The frontend runs on `http://localhost:5173` and expects the backend at `http://localhost:8080/api`.
-
----
-
-## API Endpoints
-
-| Method   | Endpoint                          | Description               | Auth     |
-|----------|-----------------------------------|---------------------------|----------|
-| `POST`   | `/api/auth/register`              | Register a new user       | Public   |
-| `POST`   | `/api/auth/login`                 | Login and receive JWT     | Public   |
-| `GET`    | `/api/auth/me`                    | Get current user profile  | Required |
-| `GET`    | `/api/projects`                   | List user's projects      | Required |
-| `POST`   | `/api/projects`                   | Create a new project      | Required |
-| `GET`    | `/api/projects/{id}/bugs`         | List bugs in a project    | Required |
-| `POST`   | `/api/projects/{id}/bugs`         | Create a bug              | Required |
-| `PATCH`  | `/api/bugs/{id}`                  | Update bug details        | Required |
-| `PATCH`  | `/api/bugs/{id}/status`           | Change bug status         | Required |
-| `GET`    | `/api/analytics/project/{id}`     | Get project analytics     | Required |
+Frontend runs at `http://localhost:5173` · Backend at `http://localhost:8080/api`
 
 ---
 
