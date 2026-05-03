@@ -46,10 +46,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
-    config.setAllowedOrigins(List.of(
+    config.setAllowedOriginPatterns(List.of(
         "http://localhost:5173",
         "https://drikshathakur-bugtracker.vercel.app",
         "https://bugtracker-six-zeta.vercel.app",
+        "https://*-drikshathakur786s-projects.vercel.app",
         "https://bugtracker-drikshathakur786s-projects.vercel.app"
     ));
     config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
