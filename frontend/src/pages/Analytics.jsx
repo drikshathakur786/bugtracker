@@ -8,36 +8,35 @@ import { getAnalyticsSummary, getByAssignee, getByStatus } from '../api/analytic
 import styles from './Analytics.module.css';
 
 const SEVERITY_COLORS = {
-  CRITICAL: '#ef4444',
-  HIGH:     '#f59e0b',
-  MEDIUM:   '#06b6d4',
-  LOW:      '#10b981',
+  CRITICAL: '#EF4444',
+  HIGH:     '#F59E0B',
+  MEDIUM:   '#3B82F6',
+  LOW:      '#10B981',
 };
 
 const STATUS_COLORS = {
-  'OPEN':        '#ef4444',
-  'IN PROGRESS': '#f59e0b',
-  'IN REVIEW':   '#06b6d4',
-  'CLOSED':      '#10b981',
+  'OPEN':        '#8B5CF6',
+  'IN PROGRESS': '#3B82F6',
+  'IN REVIEW':   '#F59E0B',
+  'CLOSED':      '#10B981',
 };
 
 const TOOLTIP_STYLE = {
   contentStyle: {
-    background: '#111827',
-    border: '1px solid rgba(255,255,255,0.1)',
-    borderRadius: '10px',
-    color: '#f1f5f9',
-    fontFamily: 'DM Sans, sans-serif',
-    fontSize: '0.85rem',
-    boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+    background: '#1C1D21',
+    border: '1px solid #2A2C32',
+    borderRadius: '4px',
+    color: '#EEEEF0',
+    fontFamily: 'Inter, sans-serif',
+    fontSize: '0.8rem',
   },
-  itemStyle: { color: '#94a3b8' },
-  labelStyle: { color: '#f1f5f9', fontWeight: 600 },
+  itemStyle: { color: '#EEEEF0' },
+  labelStyle: { color: '#8A8F98', fontWeight: 600, marginBottom: '0.25rem' },
 };
 
 const AXIS_STYLE = {
-  tick: { fill: '#475569', fontSize: 11, fontFamily: 'DM Sans, sans-serif' },
-  axisLine: { stroke: 'rgba(255,255,255,0.06)' },
+  tick: { fill: '#8A8F98', fontSize: 10, fontFamily: 'Inter, sans-serif' },
+  axisLine: { stroke: '#2A2C32' },
   tickLine: { stroke: 'transparent' },
 };
 
@@ -74,9 +73,10 @@ function Analytics({ projectId }) {
       textAlign: 'center',
       padding: '4rem',
       color: 'var(--text-muted)',
-      fontFamily: 'var(--font-display)'
+      fontFamily: 'var(--font-mono)',
+      fontSize: '0.85rem'
     }}>
-      Loading analytics...
+      Fetching metrics...
     </p>
   );
 
@@ -90,7 +90,6 @@ function Analytics({ projectId }) {
     name, value,
   }));
 
-  // Custom label for pie chart
   const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, name }) => {
     if (percent < 0.08) return null;
     const RADIAN = Math.PI / 180;
@@ -103,9 +102,9 @@ function Analytics({ projectId }) {
         fill="white"
         textAnchor="middle"
         dominantBaseline="central"
-        fontSize={11}
-        fontWeight={700}
-        fontFamily="Syne, sans-serif"
+        fontSize={10}
+        fontWeight={600}
+        fontFamily="Inter, sans-serif"
       >
         {`${(percent * 100).toFixed(0)}%`}
       </text>
@@ -114,8 +113,6 @@ function Analytics({ projectId }) {
 
   return (
     <div className={styles.container}>
-
-      {/* ── STAT CARDS ── */}
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
           <div className={styles.statNumber}>{summary.totalBugs}</div>
@@ -135,22 +132,19 @@ function Analytics({ projectId }) {
         </div>
       </div>
 
-      {/* ── CHARTS ── */}
       <div className={styles.chartsGrid}>
-
-        {/* Bugs by Severity — Pie */}
         <div className={styles.chartCard}>
-          <h3 className={styles.chartTitle}>Bugs by Severity</h3>
+          <h3 className={styles.chartTitle}>Severity Distribution</h3>
           {severityData.length === 0 ? (
-            <p className={styles.empty}>No data yet</p>
+            <p className={styles.empty}>No data</p>
           ) : (
-            <ResponsiveContainer width="100%" height={280}>
+            <ResponsiveContainer width="100%" height={260}>
               <PieChart>
                 <Pie
                   data={severityData}
                   cx="50%"
                   cy="50%"
-                  outerRadius={100}
+                  outerRadius={90}
                   innerRadius={45}
                   dataKey="value"
                   labelLine={false}
@@ -160,19 +154,20 @@ function Analytics({ projectId }) {
                   {severityData.map((entry) => (
                     <Cell
                       key={entry.name}
-                      fill={SEVERITY_COLORS[entry.name] || '#7c3aed'}
+                      fill={SEVERITY_COLORS[entry.name] || '#5E6AD2'}
                     />
                   ))}
                 </Pie>
                 <Tooltip {...TOOLTIP_STYLE} />
                 <Legend
                   iconType="circle"
-                  iconSize={8}
+                  iconSize={6}
                   formatter={(value) => (
                     <span style={{
-                      color: '#94a3b8',
-                      fontSize: '0.8rem',
-                      fontFamily: 'DM Sans, sans-serif'
+                      color: '#8A8F98',
+                      fontSize: '0.75rem',
+                      fontFamily: 'Inter, sans-serif',
+                      fontWeight: 500
                     }}>
                       {value}
                     </span>
@@ -183,30 +178,29 @@ function Analytics({ projectId }) {
           )}
         </div>
 
-        {/* Bugs by Status — Bar */}
         <div className={styles.chartCard}>
-          <h3 className={styles.chartTitle}>Bugs by Status</h3>
+          <h3 className={styles.chartTitle}>Status Breakdown</h3>
           {byStatus.length === 0 ? (
-            <p className={styles.empty}>No data yet</p>
+            <p className={styles.empty}>No data</p>
           ) : (
-            <ResponsiveContainer width="100%" height={280}>
+            <ResponsiveContainer width="100%" height={260}>
               <BarChart
                 data={byStatus}
                 margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
               >
                 <CartesianGrid
                   strokeDasharray="3 3"
-                  stroke="rgba(255,255,255,0.05)"
+                  stroke="#2A2C32"
                   vertical={false}
                 />
                 <XAxis dataKey="status" {...AXIS_STYLE} />
                 <YAxis allowDecimals={false} {...AXIS_STYLE} />
                 <Tooltip {...TOOLTIP_STYLE} />
-                <Bar dataKey="count" radius={[6, 6, 0, 0]} maxBarSize={48}>
+                <Bar dataKey="count" radius={[2, 2, 0, 0]} maxBarSize={32}>
                   {byStatus.map((entry) => (
                     <Cell
                       key={entry.status}
-                      fill={STATUS_COLORS[entry.status] || '#7c3aed'}
+                      fill={STATUS_COLORS[entry.status] || '#5E6AD2'}
                     />
                   ))}
                 </Bar>
@@ -215,20 +209,19 @@ function Analytics({ projectId }) {
           )}
         </div>
 
-        {/* Bugs by Assignee — Bar */}
         <div className={styles.chartCard}>
-          <h3 className={styles.chartTitle}>Bugs by Assignee</h3>
+          <h3 className={styles.chartTitle}>Workload by Assignee</h3>
           {byAssignee.length === 0 ? (
-            <p className={styles.empty}>No data yet</p>
+            <p className={styles.empty}>No data</p>
           ) : (
-            <ResponsiveContainer width="100%" height={280}>
+            <ResponsiveContainer width="100%" height={260}>
               <BarChart
                 data={byAssignee}
                 margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
               >
                 <CartesianGrid
                   strokeDasharray="3 3"
-                  stroke="rgba(255,255,255,0.05)"
+                  stroke="#2A2C32"
                   vertical={false}
                 />
                 <XAxis dataKey="name" {...AXIS_STYLE} />
@@ -236,35 +229,28 @@ function Analytics({ projectId }) {
                 <Tooltip {...TOOLTIP_STYLE} />
                 <Bar
                   dataKey="count"
-                  radius={[6, 6, 0, 0]}
-                  maxBarSize={48}
-                  fill="url(#assigneeGradient)"
+                  radius={[2, 2, 0, 0]}
+                  maxBarSize={32}
+                  fill="#5E6AD2"
                 />
-                <defs>
-                  <linearGradient id="assigneeGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#8b5cf6" />
-                    <stop offset="100%" stopColor="#6d28d9" />
-                  </linearGradient>
-                </defs>
               </BarChart>
             </ResponsiveContainer>
           )}
         </div>
 
-        {/* Bugs by Type — Bar */}
         <div className={styles.chartCard}>
-          <h3 className={styles.chartTitle}>Bugs by Type</h3>
+          <h3 className={styles.chartTitle}>Issue Types</h3>
           {typeData.length === 0 ? (
-            <p className={styles.empty}>No data yet</p>
+            <p className={styles.empty}>No data</p>
           ) : (
-            <ResponsiveContainer width="100%" height={280}>
+            <ResponsiveContainer width="100%" height={260}>
               <BarChart
                 data={typeData}
                 margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
               >
                 <CartesianGrid
                   strokeDasharray="3 3"
-                  stroke="rgba(255,255,255,0.05)"
+                  stroke="#2A2C32"
                   vertical={false}
                 />
                 <XAxis dataKey="name" {...AXIS_STYLE} />
@@ -272,21 +258,14 @@ function Analytics({ projectId }) {
                 <Tooltip {...TOOLTIP_STYLE} />
                 <Bar
                   dataKey="value"
-                  radius={[6, 6, 0, 0]}
-                  maxBarSize={48}
-                  fill="url(#typeGradient)"
+                  radius={[2, 2, 0, 0]}
+                  maxBarSize={32}
+                  fill="#38BDF8"
                 />
-                <defs>
-                  <linearGradient id="typeGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#06b6d4" />
-                    <stop offset="100%" stopColor="#0284c7" />
-                  </linearGradient>
-                </defs>
               </BarChart>
             </ResponsiveContainer>
           )}
         </div>
-
       </div>
     </div>
   );

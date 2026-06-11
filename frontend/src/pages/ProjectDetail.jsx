@@ -30,7 +30,6 @@ function ProjectDetail() {
 
   return (
     <div className={styles.container}>
-      {/* Header */}
       <header className={styles.header}>
         <div className={styles.headerLeft}>
           <button
@@ -39,32 +38,31 @@ function ProjectDetail() {
           >
             ← Back
           </button>
-          <div>
-            <h1 className={styles.title}>Project Detail</h1>
-            <p className={styles.subtitle}>{bugs.length} total issues</p>
+          <div className={styles.titleWrapper}>
+            <h1 className={styles.title}>Project {id.substring(0,6).toUpperCase()}</h1>
+            <p className={styles.subtitle}>{bugs.length} Issues</p>
           </div>
         </div>
         <button
           className={styles.createBtn}
           onClick={() => setShowCreateModal(true)}
         >
-          + New Bug
+          New Issue
         </button>
       </header>
 
-      {/* Tabs */}
       <div className={styles.tabs}>
         <button
           className={`${styles.tab} ${activeTab === 'kanban' ? styles.activeTab : ''}`}
           onClick={() => setActiveTab('kanban')}
         >
-          Kanban Board
+          Board
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'list' ? styles.activeTab : ''}`}
           onClick={() => setActiveTab('list')}
         >
-          List View
+          List
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'analytics' ? styles.activeTab : ''}`}
@@ -74,9 +72,8 @@ function ProjectDetail() {
         </button>
       </div>
 
-      {/* Content */}
       <main className={styles.main}>
-        {loading && <p className={styles.loading}>Loading bugs...</p>}
+        {loading && <p className={styles.loading}>Loading issues...</p>}
         {error && <p className={styles.error}>{error}</p>}
 
         {!loading && activeTab === 'kanban' && (
@@ -89,15 +86,15 @@ function ProjectDetail() {
         {!loading && activeTab === 'list' && (
           <div className={styles.listView}>
             {bugs.length === 0 ? (
-              <p className={styles.empty}>No bugs yet. Create your first one!</p>
+              <p className={styles.empty}>No issues found.</p>
             ) : (
               <table className={styles.table}>
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Title</th>
-                    <th>Type</th>
                     <th>Status</th>
-                    <th>Severity</th>
+                    <th>Priority</th>
                     <th>Assignee</th>
                     <th>Created</th>
                   </tr>
@@ -109,12 +106,12 @@ function ProjectDetail() {
                       onClick={() => navigate(`/bugs/${bug.id}`)}
                       className={styles.tableRow}
                     >
-                      <td>{bug.title}</td>
-                      <td><span className={styles.typeBadge}>{bug.type}</span></td>
-                      <td><span className={styles.statusBadge}>{bug.status}</span></td>
-                      <td>{bug.severity}</td>
+                      <td className={styles.idCell}>{bug.id.substring(0,6).toUpperCase()}</td>
+                      <td className={styles.titleCell}>{bug.title}</td>
+                      <td><span className={styles.statusBadge}>{bug.status.replace('_', ' ')}</span></td>
+                      <td className={styles.typeBadge}>{bug.priority}</td>
                       <td>{bug.assigneeName || '—'}</td>
-                      <td>{new Date(bug.createdAt).toLocaleDateString()}</td>
+                      <td className={styles.idCell}>{new Date(bug.createdAt).toLocaleDateString()}</td>
                     </tr>
                   ))}
                 </tbody>

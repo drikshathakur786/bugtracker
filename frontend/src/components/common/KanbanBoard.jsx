@@ -2,23 +2,19 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import BugCard from "./BugCard";
 import styles from './KanbanBoard.module.css';
 
-// Column display config
 const COLUMNS = [
-  { id: 'OPEN',        label: 'Open',        color: '#e53e3e' },
-  { id: 'IN_PROGRESS', label: 'In Progress', color: '#d69e2e' },
-  { id: 'IN_REVIEW',   label: 'In Review',   color: '#3182ce' },
-  { id: 'CLOSED',      label: 'Closed',      color: '#38a169' },
+  { id: 'OPEN',        label: 'Open',        color: 'var(--purple)' },
+  { id: 'IN_PROGRESS', label: 'In Progress', color: 'var(--accent)' },
+  { id: 'IN_REVIEW',   label: 'In Review',   color: 'var(--yellow)' },
+  { id: 'CLOSED',      label: 'Closed',      color: 'var(--green)' },
 ];
 
 function KanbanBoard({ bugsByStatus, onDragEnd }) {
   return (
-    // DragDropContext wraps the entire drag and drop area
-    // onDragEnd fires when user drops a card — we handle status update there
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={styles.board}>
         {COLUMNS.map(column => (
           <div key={column.id} className={styles.column}>
-            {/* Column Header */}
             <div className={styles.columnHeader}>
               <div
                 className={styles.colorDot}
@@ -30,7 +26,6 @@ function KanbanBoard({ bugsByStatus, onDragEnd }) {
               </span>
             </div>
 
-            {/* Droppable area — where cards can be dropped */}
             <Droppable droppableId={column.id}>
               {(provided, snapshot) => (
                 <div
@@ -40,7 +35,6 @@ function KanbanBoard({ bugsByStatus, onDragEnd }) {
                     snapshot.isDraggingOver ? styles.draggingOver : ''
                   }`}
                 >
-                  {/* Render each bug as a Draggable card */}
                   {bugsByStatus[column.id]?.map((bug, index) => (
                     <Draggable
                       key={bug.id}
@@ -57,12 +51,10 @@ function KanbanBoard({ bugsByStatus, onDragEnd }) {
                       )}
                     </Draggable>
                   ))}
-                  {/* Placeholder keeps column height while dragging */}
                   {provided.placeholder}
 
-                  {/* Empty state for column */}
                   {bugsByStatus[column.id]?.length === 0 && (
-                    <div className={styles.empty}>No bugs here</div>
+                    <div className={styles.empty}>No issues</div>
                   )}
                 </div>
               )}

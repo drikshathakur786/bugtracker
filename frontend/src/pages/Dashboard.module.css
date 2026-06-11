@@ -3,153 +3,173 @@
   background: var(--bg-base);
 }
 
-/* ── NAV ── */
 .header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(8, 12, 20, 0.85);
-  backdrop-filter: blur(20px);
+  background: var(--bg-surface);
   border-bottom: 1px solid var(--border);
   padding: 0 2rem;
-  height: 60px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .logo {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #f1f5f9, var(--accent-bright));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 0;
+  gap: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.logoImage {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 }
 
 .userInfo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1.25rem;
 }
 
 .userName {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
+  font-size: 0.85rem;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .role {
-  background: var(--accent-subtle);
-  color: var(--accent-bright);
-  border: 1px solid rgba(124,58,237,0.25);
-  padding: 0.2rem 0.65rem;
-  border-radius: 99px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  font-family: var(--font-display);
-  letter-spacing: 0.04em;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   text-transform: uppercase;
+  border: 1px solid var(--border);
 }
 
 .logoutBtn {
-  padding: 0.4rem 1rem;
+  padding: 0.3rem 0.6rem;
   background: transparent;
-  border: 1px solid var(--border-bright);
-  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 0.825rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
-  transition: all 0.2s;
-  font-family: var(--font-body);
+  transition: all var(--duration-fast);
+  font-weight: 500;
 }
 
 .logoutBtn:hover {
-  border-color: var(--red);
-  color: var(--red);
-  background: var(--red-subtle);
+  background: var(--bg-elevated);
+  border-color: var(--border);
+  color: var(--text-primary);
 }
 
-/* ── MAIN ── */
 .main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2.5rem 2rem;
+  animation: fadeIn var(--duration-normal) var(--ease-out);
 }
 
 .pageHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .pageHeader h2 {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 800;
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 600;
   color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
-  color: var(--text-muted);
-  font-size: 0.875rem;
-  margin-top: 0.3rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 .createBtn {
-  padding: 0.65rem 1.4rem;
-  background: linear-gradient(135deg, var(--accent), #6d28d9);
+  padding: 0.6rem 1rem;
+  background: var(--accent);
   color: white;
-  border: none;
-  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 700;
-  font-family: var(--font-display);
-  transition: all 0.2s;
-  letter-spacing: 0.02em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all var(--duration-fast);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .createBtn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 25px var(--accent-glow);
+  background: var(--accent-hover);
+  box-shadow: 0 0 0 2px var(--accent-subtle);
 }
 
-/* ── GRID ── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.25rem;
 }
 
-/* ── STATES ── */
 .centered {
   text-align: center;
   padding: 4rem;
   color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
 }
 
 .errorMsg {
   background: var(--red-subtle);
-  border: 1px solid rgba(239,68,68,0.2);
-  color: #fca5a5;
+  border: 1px solid var(--red-border);
+  color: var(--red);
   padding: 1rem;
-  border-radius: var(--radius-md);
-  margin-bottom: 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
 }
 
 .empty {
   text-align: center;
-  padding: 5rem 2rem;
-  color: var(--text-muted);
+  padding: 4rem 2rem;
+  background: var(--bg-surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
 }
 
-.empty p:first-child { font-size: 3rem; margin-bottom: 1rem; }
-.empty h3 { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
-.empty .createBtn { margin-top: 1.5rem; }
+.emptyIcon {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.empty h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.empty p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}

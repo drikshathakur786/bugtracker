@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  padding: 1rem 0;
+  animation: fadeIn var(--duration-fast);
 }
 
 .statsGrid {
@@ -11,80 +13,65 @@
 }
 
 .statCard {
-  background: var(--bg-card);
+  background: var(--bg-surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
-  text-align: center;
-  transition: all 0.2s;
-  position: relative;
-  overflow: hidden;
+  transition: all var(--duration-fast);
+  display: flex;
+  flex-direction: column;
 }
 
-.statCard::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--cyan));
-  opacity: 0;
-  transition: opacity 0.2s;
+.statCard:hover { 
+  border-color: var(--border-hover);
+  background: var(--bg-hover);
 }
-
-.statCard:hover { border-color: var(--border-bright); }
-.statCard:hover::before { opacity: 1; }
 
 .statNumber {
-  font-family: var(--font-display);
-  font-size: 2.8rem;
-  font-weight: 800;
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 500;
   color: var(--text-primary);
   line-height: 1;
 }
 
-.statLabel {
-  font-size: 0.775rem;
-  color: var(--text-muted);
-  margin-top: 0.4rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-family: var(--font-display);
-}
+.open .statNumber { color: var(--purple); }
+.progress .statNumber { color: var(--accent); }
+.closed .statNumber { color: var(--green); }
 
-.open .statNumber    { color: var(--red); }
-.progress .statNumber { color: var(--yellow); }
-.closed .statNumber  { color: var(--green); }
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
 
 .chartsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .chartCard {
-  background: var(--bg-card);
+  background: var(--bg-surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
-  transition: border-color 0.2s;
 }
 
-.chartCard:hover { border-color: var(--border-bright); }
-
 .chartTitle {
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin: 0 0 1.25rem 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 1.5rem 0;
 }
 
 .empty {
   text-align: center;
   color: var(--text-muted);
-  padding: 3rem 0;
-  font-size: 0.875rem;
+  padding: 4rem 0;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
 }

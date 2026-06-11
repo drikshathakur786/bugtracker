@@ -19,73 +19,76 @@ function Dashboard() {
 
   return (
     <div className={styles.container}>
-      {/* Top Navigation Bar */}
       <header className={styles.header}>
-        <h1 className={styles.logo}>🐛 Bug Tracker</h1>
+        <div className={styles.logo}>
+          <img src="/logo.png" alt="BugTracker" className={styles.logoImage} />
+          BugTracker
+        </div>
         <div className={styles.userInfo}>
-          <span className={styles.userName}>{user?.name}</span>
           <span className={styles.role}>{user?.role}</span>
+          <span className={styles.userName}>{user?.name}</span>
           <button onClick={handleLogout} className={styles.logoutBtn}>
-            Logout
+            Log out
           </button>
         </div>
       </header>
 
       <main className={styles.main}>
-        {/* Page Header */}
         <div className={styles.pageHeader}>
           <div>
-            <h2>My Projects</h2>
+            <h2>Good morning, {user?.name?.split(' ')[0] || 'there'}</h2>
             <p className={styles.subtitle}>
-              {projects.length} project{projects.length !== 1 ? 's' : ''}
+              {projects.length} active project{projects.length !== 1 ? 's' : ''}
             </p>
           </div>
           <button
             className={styles.createBtn}
             onClick={() => setShowCreateModal(true)}
           >
-            + New Project
+            <span>+</span> New Project
           </button>
         </div>
 
-        {/* Loading State */}
         {loading && (
           <div className={styles.centered}>
-            <p>Loading projects...</p>
+            <p>Loading workspace...</p>
           </div>
         )}
 
-        {/* Error State */}
         {error && (
           <div className={styles.errorMsg}>{error}</div>
         )}
 
-        {/* Empty State */}
         {!loading && projects.length === 0 && (
           <div className={styles.empty}>
-            <p>🗂️</p>
-            <h3>No projects yet</h3>
-            <p>Create your first project to start tracking bugs</p>
+            <div className={styles.emptyIcon}>⊞</div>
+            <h3>No projects found</h3>
+            <p>Get started by creating a new project to track your issues.</p>
             <button
               className={styles.createBtn}
               onClick={() => setShowCreateModal(true)}
+              style={{ margin: '0 auto' }}
             >
-              + Create Project
+              New Project
             </button>
           </div>
         )}
 
-        {/* Projects Grid */}
         {!loading && projects.length > 0 && (
           <div className={styles.grid}>
-            {projects.map(project => (
-              <ProjectCard key={project.id} project={project} />
+            {projects.map((project, index) => (
+              <div 
+                key={project.id} 
+                style={{ animationDelay: `${index * 30}ms` }}
+                className="stagger-slide-up"
+              >
+                <ProjectCard project={project} />
+              </div>
             ))}
           </div>
         )}
       </main>
 
-      {/* Create Project Modal */}
       {showCreateModal && (
         <CreateProjectModal
           onClose={() => setShowCreateModal(false)}

@@ -1,33 +1,33 @@
 .badge {
-  padding: 0.18rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  font-family: var(--font-display);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  border: 1px solid transparent;
 }
 
 .critical {
   background: var(--red-subtle);
-  color: #fca5a5;
-  border: 1px solid rgba(239,68,68,0.2);
+  color: var(--red);
+  border-color: var(--red-border);
 }
 
 .high {
   background: var(--yellow-subtle);
-  color: #fcd34d;
-  border: 1px solid rgba(245,158,11,0.2);
+  color: var(--yellow);
+  border-color: var(--yellow-border);
 }
 
 .medium {
   background: var(--cyan-subtle);
-  color: #67e8f9;
-  border: 1px solid rgba(6,182,212,0.2);
+  color: var(--cyan);
+  border-color: var(--cyan-border);
 }
 
 .low {
   background: var(--green-subtle);
-  color: #6ee7b7;
-  border: 1px solid rgba(16,185,129,0.2);
+  color: var(--green);
+  border-color: var(--green-border);
 }

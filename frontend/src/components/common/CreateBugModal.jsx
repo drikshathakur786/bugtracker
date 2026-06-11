@@ -36,17 +36,8 @@ function CreateBugModal({ projectId, onClose, onSubmit }) {
     }
   };
 
-  const selectStyle = {
-    padding: '0.65rem 0.9rem',
-    border: '1.5px solid #e2e8f0',
-    borderRadius: '8px',
-    fontSize: '0.95rem',
-    outline: 'none',
-    background: 'white',
-  };
-
   return (
-    <Modal title="Create New Bug / Task" onClose={onClose}>
+    <Modal title="Create New Issue" onClose={onClose}>
       {error && <div className={styles.error}>{error}</div>}
       <form onSubmit={handleSubmit} className={styles.form}>
 
@@ -73,12 +64,10 @@ function CreateBugModal({ projectId, onClose, onSubmit }) {
           />
         </div>
 
-        {/* Two selects side by side */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div className={styles.selectGrid}>
           <div className={styles.field}>
             <label>Type</label>
-            <select name="type" value={formData.type}
-              onChange={handleChange} style={selectStyle}>
+            <select name="type" value={formData.type} onChange={handleChange}>
               <option value="BUG">Bug</option>
               <option value="TASK">Task</option>
               <option value="STORY">Story</option>
@@ -87,8 +76,7 @@ function CreateBugModal({ projectId, onClose, onSubmit }) {
           </div>
           <div className={styles.field}>
             <label>Severity</label>
-            <select name="severity" value={formData.severity}
-              onChange={handleChange} style={selectStyle}>
+            <select name="severity" value={formData.severity} onChange={handleChange}>
               <option value="CRITICAL">Critical</option>
               <option value="HIGH">High</option>
               <option value="MEDIUM">Medium</option>
@@ -99,8 +87,7 @@ function CreateBugModal({ projectId, onClose, onSubmit }) {
 
         <div className={styles.field}>
           <label>Priority</label>
-          <select name="priority" value={formData.priority}
-            onChange={handleChange} style={selectStyle}>
+          <select name="priority" value={formData.priority} onChange={handleChange}>
             <option value="URGENT">Urgent</option>
             <option value="HIGH">High</option>
             <option value="MEDIUM">Medium</option>
@@ -113,7 +100,7 @@ function CreateBugModal({ projectId, onClose, onSubmit }) {
             Cancel
           </button>
           <button type="submit" className={styles.submitBtn} disabled={loading}>
-            {loading ? 'Creating...' : 'Create'}
+            {loading ? 'Creating...' : 'Create Issue'}
           </button>
         </div>
       </form>
