@@ -433,3 +433,28 @@
   font-size: 0.85rem;
   color: var(--text-primary);
 }
+
+.dangerZone {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.deleteBtn {
+  background: transparent;
+  color: #ff4d4d;
+  border: 1px solid #ff4d4d;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.deleteBtn:hover {
+  background: #ff4d4d;
+  color: white;
+}

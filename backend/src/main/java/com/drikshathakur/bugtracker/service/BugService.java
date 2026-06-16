@@ -25,6 +25,7 @@ public class BugService {
     private final UserRepository userRepository;
     private final AuditLogRepository auditLogRepository;
     private final CommentRepository commentRepository;
+    private final ProjectMemberRepository projectMemberRepository;
 
     @Transactional
     public BugResponse createBug(CreateBugRequest request, User currentUser) {
@@ -125,9 +126,18 @@ public class BugService {
     }
 
     @Transactional
-    public void deleteBug(UUID bugId) {
+    public void deleteBug(UUID bugId, User currentUser) {
         Bug bug = bugRepository.findById(bugId)
                 .orElseThrow(() -> new RuntimeException("Bug not found"));
+                
+        boolean isReporter = bug.getReporter().getId().equals(currentUser.getId());
+        boolean isAdmin = projectMemberRepository.findByProject(bug.getProject()).stream()
+                .anyMatch(m -> m.getUser().getId().equals(currentUser.getId()) && m.getRole() == User.Role.ADMIN);
+
+        if (!isReporter && !isAdmin) {
+            throw new RuntimeException("Only the reporter or project Admin can delete a bug");
+        }
+
         bugRepository.delete(bug);
     }
 

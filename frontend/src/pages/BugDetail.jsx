@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getBug, updateBug, getComments, addComment, getAuditLog } from '../api/bugs';
+import { getBug, updateBug, getComments, addComment, getAuditLog, deleteBug } from '../api/bugs';
 import { getMembers } from '../api/projects';
 import { useAuth } from '../context/AuthContext';
 import SeverityBadge from '../components/common/SeverityBadge';
@@ -58,14 +58,26 @@ function BugDetail() {
 
   const saveEdit = async (field) => {
     try {
-      const response = await updateBug(id, { [field]: editValue });
-      setBug(response.data);
+      const res = await updateBug(id, { [field]: editValue });
+      setBug(res.data);
+      setEditing(null);
+      // Refresh audit log
       const auditRes = await getAuditLog(id);
       setAuditLog(auditRes.data);
     } catch (err) {
-      console.error('Failed to update', err);
-    } finally {
-      setEditing(null);
+      console.error('Failed to update bug', err);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this bug? This action cannot be undone.')) {
+      try {
+        await deleteBug(id);
+        navigate(`/projects/${bug.projectId}`);
+      } catch (err) {
+        console.error('Failed to delete bug', err);
+        alert(err.response?.data?.message || 'Failed to delete bug. Make sure you are an Admin or the Reporter.');
+      }
     }
   };
 
@@ -86,6 +98,10 @@ function BugDetail() {
 
   if (loading) return <div className={styles.loading}>Loading issue data...</div>;
   if (!bug) return <div className={styles.loading}>Issue not found</div>;
+
+  const isAdmin = members.some(m => m.email === user?.email && m.role === 'ADMIN');
+  const isReporter = bug?.reporterName === user?.name;
+  const canDelete = isAdmin || isReporter;
 
   return (
     <div className={styles.container}>
@@ -369,6 +385,14 @@ function BugDetail() {
               {new Date(bug.createdAt).toLocaleDateString()}
             </span>
           </div>
+
+          {canDelete && (
+            <div className={styles.dangerZone}>
+              <button onClick={handleDelete} className={styles.deleteBtn}>
+                Delete Bug
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

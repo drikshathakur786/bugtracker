@@ -59,8 +59,10 @@ public class BugController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBug(@PathVariable UUID id) {
-        bugService.deleteBug(id);
+    public ResponseEntity<Void> deleteBug(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal User currentUser) {
+        bugService.deleteBug(id, currentUser);
         return ResponseEntity.noContent().build(); // 204 No Content
     }
 
