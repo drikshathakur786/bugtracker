@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import styles from './Modal.module.css'; // Reuse existing modal styles
+import modalStyles from './Modal.module.css';
+import styles from './AddMemberModal.module.css';
 
 function AddMemberModal({ onClose, onSubmit }) {
   const [formData, setFormData] = useState({
@@ -23,14 +24,14 @@ function AddMemberModal({ onClose, onSubmit }) {
   };
 
   return (
-    <div className={styles.backdrop} onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
-        <div className={styles.header}>
+    <div className={modalStyles.backdrop} onClick={onClose}>
+      <div className={modalStyles.modal} onClick={e => e.stopPropagation()}>
+        <div className={modalStyles.header}>
           <h2>Add Team Member</h2>
-          <button className={styles.closeBtn} onClick={onClose}>✕</button>
+          <button className={modalStyles.closeBtn} onClick={onClose}>✕</button>
         </div>
 
-        <div className={styles.body}>
+        <div className={modalStyles.body}>
           {error && <div className={styles.error}>{error}</div>}
 
           <form onSubmit={handleSubmit} className={styles.form}>
