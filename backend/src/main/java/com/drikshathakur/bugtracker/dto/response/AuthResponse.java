@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthResponse {
     private String token;      // the JWT token
+    private UUID id;           // the user ID
     private String name;
     private String email;
     private User.Role role;
