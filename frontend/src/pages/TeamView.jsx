@@ -41,7 +41,7 @@ function TeamView({ projectId }) {
 
   if (loading) return <p className={styles.empty}>Loading team...</p>;
 
-  const isAdmin = members.some(m => m.userId === user?.id && m.role === 'ADMIN');
+  const isAdmin = members.some(m => m.email === user?.email && m.role === 'ADMIN');
 
   return (
     <div className={styles.container}>
