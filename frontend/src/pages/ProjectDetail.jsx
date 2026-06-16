@@ -4,6 +4,7 @@ import useBugs from '../hooks/useBugs';
 import KanbanBoard from '../components/common/KanbanBoard';
 import CreateBugModal from '../components/common/CreateBugModal';
 import Analytics from './Analytics';
+import TeamView from './TeamView';
 import { useAuth } from '../context/AuthContext';
 import styles from './ProjectDetail.module.css';
 
@@ -70,6 +71,12 @@ function ProjectDetail() {
         >
           Analytics
         </button>
+        <button
+          className={`${styles.tab} ${activeTab === 'team' ? styles.activeTab : ''}`}
+          onClick={() => setActiveTab('team')}
+        >
+          Team
+        </button>
       </div>
 
       <main className={styles.main}>
@@ -122,6 +129,10 @@ function ProjectDetail() {
 
         {!loading && activeTab === 'analytics' && (
           <Analytics projectId={id} />
+        )}
+
+        {!loading && activeTab === 'team' && (
+          <TeamView projectId={id} />
         )}
       </main>
 
