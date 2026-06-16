@@ -40,7 +40,7 @@ Every status change is logged automatically — who changed it, what it was befo
 | Layer        | Technology                                                  |
 |--------------|-------------------------------------------------------------|
 | **Backend**  | Java 17, Spring Boot 3, Spring Security, Hibernate (JPA)   |
-| **Frontend** | React 18, Vite, Recharts, @hello-pangea/dnd                |
+| **Frontend** | React 19, Vite, Recharts, @hello-pangea/dnd                |
 | **Database** | PostgreSQL (Neon)                                           |
 | **Auth**     | JWT with BCrypt password hashing                            |
 | **Hosting**  | Vercel (frontend) · Render (backend) · Neon (database)     |
@@ -75,18 +75,20 @@ com.drikshathakur.bugtracker/
 
 ## API Overview
 
-| Method   | Endpoint                          | Description               | Auth     |
-|----------|-----------------------------------|---------------------------|----------|
-| `POST`   | `/api/auth/register`              | Create a new account      | Public   |
-| `POST`   | `/api/auth/login`                 | Login, receive JWT        | Public   |
-| `GET`    | `/api/auth/me`                    | Current user profile      | Required |
-| `GET`    | `/api/projects`                   | List your projects        | Required |
-| `POST`   | `/api/projects`                   | Create a project          | Required |
-| `GET`    | `/api/projects/{id}/bugs`         | Bugs in a project         | Required |
-| `POST`   | `/api/projects/{id}/bugs`         | File a new bug            | Required |
-| `PATCH`  | `/api/bugs/{id}`                  | Update bug details        | Required |
-| `PATCH`  | `/api/bugs/{id}/status`           | Change bug status         | Required |
-| `GET`    | `/api/analytics/project/{id}`     | Project analytics         | Required |
+| Method   | Endpoint                                  | Description               | Auth     |
+|----------|-------------------------------------------|---------------------------|----------|
+| `POST`   | `/api/auth/register`                      | Create a new account      | Public   |
+| `POST`   | `/api/auth/login`                         | Login, receive JWT        | Public   |
+| `GET`    | `/api/auth/me`                            | Current user profile      | Required |
+| `GET`    | `/api/projects`                           | List your projects        | Required |
+| `POST`   | `/api/projects`                           | Create a project          | Required |
+| `GET`    | `/api/projects/{id}`                      | Get project details       | Required |
+| `GET`    | `/api/bugs?projectId={id}`                | Bugs in a project         | Required |
+| `POST`   | `/api/bugs`                               | File a new bug            | Required |
+| `GET`    | `/api/bugs/{id}`                          | Get bug details           | Required |
+| `PATCH`  | `/api/bugs/{id}`                          | Update bug details/status | Required |
+| `DELETE` | `/api/bugs/{id}`                          | Delete a bug              | Required |
+| `GET`    | `/api/projects/{id}/analytics/summary`    | Project analytics         | Required |
 
 ---
 
