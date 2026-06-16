@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.UUID;
 
 // This is what we send BACK to the client after login/register
 // Never send the User entity directly — it would expose passwordHash!
