@@ -11,6 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class MemberResponse {
     private UUID id;
+    private UUID userId;
     private String name;
     private String email;
     private User.Role role;

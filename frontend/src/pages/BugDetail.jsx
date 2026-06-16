@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getBug, updateBug, getComments, addComment, getAuditLog } from '../api/bugs';
+import { getMembers } from '../api/projects';
 import { useAuth } from '../context/AuthContext';
 import SeverityBadge from '../components/common/SeverityBadge';
 import styles from './BugDetail.module.css';
@@ -12,6 +13,7 @@ function BugDetail() {
 
   const [bug, setBug] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [members, setMembers] = useState([]);
 
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -39,6 +41,9 @@ function BugDetail() {
       setBug(bugRes.data);
       setComments(commentsRes.data);
       setAuditLog(auditRes.data);
+
+      const membersRes = await getMembers(bugRes.data.projectId);
+      setMembers(membersRes.data);
     } catch (err) {
       console.error('Failed to load bug', err);
     } finally {
@@ -324,7 +329,33 @@ function BugDetail() {
 
           <div className={styles.field}>
             <label>Assignee</label>
-            <span className={styles.value}>{bug.assigneeName || 'Unassigned'}</span>
+            {editing === 'assigneeId' ? (
+              <div className={styles.inlineEdit}>
+                <select
+                  value={editValue || ''}
+                  onChange={e => setEditValue(e.target.value)}
+                  className={styles.select}
+                  autoFocus
+                >
+                  <option value="">Unassigned</option>
+                  {members.map(m => (
+                    <option key={m.userId} value={m.userId}>{m.name}</option>
+                  ))}
+                </select>
+                <div className={styles.editActions}>
+                  <button onClick={() => saveEdit('assigneeId')} className={styles.saveBtn}>Save</button>
+                  <button onClick={() => setEditing(null)} className={styles.cancelBtn}>✕</button>
+                </div>
+              </div>
+            ) : (
+              <span
+                className={styles.value}
+                onClick={() => startEdit('assigneeId', bug.assigneeId)}
+                title="Click to edit"
+              >
+                {bug.assigneeName || 'Unassigned'}
+              </span>
+            )}
           </div>
 
           <div className={styles.field}>

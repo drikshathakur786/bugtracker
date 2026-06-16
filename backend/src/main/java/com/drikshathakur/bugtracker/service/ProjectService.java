@@ -114,6 +114,7 @@ public class ProjectService {
     private MemberResponse mapToMemberResponse(ProjectMember member) {
         return MemberResponse.builder()
                 .id(member.getId())
+                .userId(member.getUser().getId())
                 .name(member.getUser().getName())
                 .email(member.getUser().getEmail())
                 .role(member.getRole())

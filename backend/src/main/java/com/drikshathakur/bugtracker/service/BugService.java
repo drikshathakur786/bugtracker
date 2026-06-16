@@ -195,6 +195,7 @@ public class BugService {
                 .reporterName(bug.getReporter().getName())
                 .assigneeName(bug.getAssignee() != null ? bug.getAssignee().getName() : null)
                 .assigneeEmail(bug.getAssignee() != null ? bug.getAssignee().getEmail() : null)
+                .assigneeId(bug.getAssignee() != null ? bug.getAssignee().getId() : null)
                 .projectId(bug.getProject().getId())
                 .projectName(bug.getProject().getName())
                 .createdAt(bug.getCreatedAt())

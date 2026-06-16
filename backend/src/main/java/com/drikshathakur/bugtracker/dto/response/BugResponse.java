@@ -20,6 +20,7 @@ public class BugResponse {
     private String reporterName;
     private String assigneeName;
     private String assigneeEmail;
+    private UUID assigneeId;
     private UUID projectId;
     private String projectName;
     private LocalDateTime createdAt;
