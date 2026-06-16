@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getMembers, addMember } from '../api/projects';
 import AddMemberModal from '../components/common/AddMemberModal';
+import { useAuth } from '../context/AuthContext';
 import styles from './TeamView.module.css';
 
 function TeamView({ projectId }) {
@@ -8,6 +9,7 @@ function TeamView({ projectId }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     fetchMembers();
@@ -39,13 +41,17 @@ function TeamView({ projectId }) {
 
   if (loading) return <p className={styles.empty}>Loading team...</p>;
 
+  const isAdmin = members.some(m => m.userId === user?.id && m.role === 'ADMIN');
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h3 className={styles.title}>Project Team</h3>
-        <button className={styles.addBtn} onClick={() => setShowModal(true)}>
-          + Add Member
-        </button>
+        {isAdmin && (
+          <button className={styles.addBtn} onClick={() => setShowModal(true)}>
+            + Add Member
+          </button>
+        )}
       </div>
 
       {error && <div className={styles.error}>{error}</div>}
